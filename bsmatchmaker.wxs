@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+    <Product Id="0C2438CA-D665-4A3F-8E04-CE28A87098D7" Name="BS Match Maker" Language="1041" Version="0.8.2.0" Manufacturer="hhosaka" UpgradeCode="A7A39985-F590-4086-821F-8BED00043B5E" Codepage="932">
+        <Package Id="*" Description="BS Match Maker Installer" Comments="Beta version" InstallerVersion="200" Compressed="yes" SummaryCodepage="932" Keywords="Installer" />
+        <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder" Name="PFiles">
+                <Directory Id="BS_MATCH_MAKER" Name="bs_match_maker">
+                    <Component Id="BSMATCHMAKER.EXE" DiskId="1" Guid="7DECE380-A067-4A5E-A841-B123D5E683FA">
+                        <File Id="BSMATCHMAKER.EXE" Name="BSMatchMaker.exe" Source="bin\Release\BSMatchMaker.exe">
+                            <Shortcut Id="desktopShortcut" Directory="DesktopFolder" Name="BS Match Maker" WorkingDirectory="INSTALLDIR" Advertise="yes" Icon="DesktopIcon.exe" IconIndex="0" />
+                            <Shortcut Id="ExeShortcut" Directory="ProgramMenuDir" Name="BS Match Maker" Advertise="yes" Icon="StartMenuIcon.exe" IconIndex="0" />
+                        </File>
+                    </Component>
+                    <Component Id="BSMATCHMAKERMANUAL.PDF" DiskId="1" Guid="73498C39-1994-4EE2-B010-D137B245A4DB">
+                        <File Id="BSMATCHMAKERMANUAL.PDF" Name="BSMatchMakerManual.pdf" Source="BSMatchMakerManual.pdf" />
+                    </Component>
+                    <Directory Id="JA" Name="ja">
+                        <Component Id="BSMATCHMAKER.RESOURCES.DLL" DiskId="1" Guid="DB72E15E-24CE-4613-8EF9-40A0832D4703">
+                            <File Id="BSMATCHMAKER.RESOURCES.DLL" Name="BSMatchMaker.resources.dll" Source="bin\Release\ja\BSMatchMaker.resources.dll" />
+                        </Component>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="DesktopFolder" />
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="ProgramMenuDir" Name="BS Match Maker">
+                    <Component Id="StartMenuShortcuts" Guid="D3DB6085-DF54-4D98-BF17-1ECB46D2309F">
+                        <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+                        <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
+                        <Shortcut Id="UninstallProduct" Name="Uninstall" Description="Uninstalls BS Match Maker" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]" />
+                        <util:InternetShortcut Id="WebsiteShortcut" Name="The Support Page" Target="https://code.google.com/p/bs-match-maker/" />
+                    </Component>
+                </Directory>
+            </Directory>
+        </Directory>
+        <Feature Id="DefaultFeature" Title="Main Feature" Level="1">
+            <ComponentRef Id="BSMATCHMAKER.EXE" />
+            <ComponentRef Id="BSMATCHMAKERMANUAL.PDF" />
+            <ComponentRef Id="StartMenuShortcuts" />
+            <ComponentRef Id="BSMATCHMAKER.RESOURCES.DLL" />
+        </Feature>
+        <UI />
+        <UIRef Id="WixUI_InstallDir" />
+        <PropertyRef Id="NETFRAMEWORK35" />
+        <Condition Message="This application requires .NET Framework 4.0 or later.">Installed OR NETFRAMEWORK35</Condition>
+        <Icon Id="DesktopIcon.exe" SourceFile="bin\Release\BSMatchMaker.exe" />
+        <Icon Id="StartMenuIcon.exe" SourceFile="bin\Release\BSMatchMaker.exe" />
+        <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+        <Property Id="WIXUI_INSTALLDIR" Value="BS_MATCH_MAKER" />
+    </Product>
+</Wix>
