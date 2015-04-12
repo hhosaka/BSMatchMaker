@@ -103,7 +103,7 @@ namespace BSMatchMaker {
             }
 
             public bool MoveNext() {
-                Current = reader.ReadLine();
+                while ((Current = reader.ReadLine()) == "") ;
                 return Current != null;
             }
 
